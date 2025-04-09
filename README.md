@@ -1,6 +1,6 @@
 # <a href="[https://www.linkedin.com/in/jimmy/](https://www.linkedin.com/in/montellricks/)">Montell Ricks</a>'s IT and Cybersecurity Project Portfolio 🔐
 
-I'm passionate about cybersecurity and love tackling complex challenges through hands-on projects. From vulnerability management to threat detection, these projects allow me to dive deep into the ever-evolving landscape of cybersecurity. Please feel free to check them out and see the work I’ve put into enhancing security operations and processes!
+I'm passionate about cybersecurity and enjoy diving into complex challenges through hands-on projects. My background includes extensive front-end and back-end experience with HR and HRIS systems, gained through working with Fortune 500 companies like Amazon.com, the University of California, and organizations in the healthcare and union sectors—where regulatory compliance and data protection are paramount. This experience has given me a strong foundation in aligning technical solutions with strict compliance requirements. My projects—spanning vulnerability management, threat detection, and more—reflect my commitment to enhancing security operations and staying ahead in the fast-paced cybersecurity landscape. Feel free to explore my work to see how I’ve applied these skills in real-world scenarios.
 
 
 ## ⚠️ Vulnerability Management Projects
