@@ -6,7 +6,7 @@ I'm a passionate cybersecurity professional who enjoys diving into complex chall
 ## ⚠️ Vulnerability Management Projects
 
 - **[Vulnerability Management Program Implementation](https://github.com/MontellRicks/vulnerability-management-program)**
-- **[STIG Implementations (PowerShell)](https://github.com/joshmadakor0/stig-implementations)**
+- **[STIG Implementations (PowerShell)](https://github.com/MontellRicks/montellricks/tree/main/STIGS)**
 
 ## 🚨 Threat Hunting and Security Operations
 
