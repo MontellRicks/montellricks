@@ -20,9 +20,33 @@
     PowerShell Ver. : 
 
 .USAGE
-    Put any usage instructions here.
-    Example syntax:
-    PS C:\> .\__remediation_template(WN10-SO-000040).ps1 
+# Remediation Script: WN10-SO-000040
+# User Context: PS C:\Users\montystig>
+# Description: Disables the built-in Guest account to enforce compliance
+
+Write-Output "`n[+] Remediating STIG: WN10-SO-000040"
+Write-Output "[*] Checking the status of the built-in Guest account..."
+
+try {
+    # Get the built-in Guest account
+    $guestAccount = Get-LocalUser -Name "Guest"
+
+    # Check if it's enabled
+    if ($guestAccount.Enabled) {
+        Write-Output "[-] Guest account is ENABLED. Disabling it now..."
+        Disable-LocalUser -Name "Guest"
+        Write-Output "[✔] Guest account has been DISABLED to meet STIG WN10-SO-000040."
+    } else {
+        Write-Output "[✓] Guest account is already DISABLED. No action needed."
+    }
+}
+catch {
+    Write-Output "[!] Guest account not found or error retrieving account. Skipping..."
+    Write-Output $_
+}
+
+Write-Output "`n[✔] STIG WN10-SO-000040 remediation completed for user: montystig"
+
 #>
 
 
