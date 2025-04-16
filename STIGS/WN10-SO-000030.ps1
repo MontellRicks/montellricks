@@ -25,7 +25,6 @@
     PS C:\> .\__remediation_template(WN10-SO-000030).ps1 
 #>
 
-# YOUR CODE GOES HERE
 
 # Requires admin rights
 Write-Output "`n[+] Remediating STIG: WN10-SO-000030"
