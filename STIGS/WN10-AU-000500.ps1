@@ -20,9 +20,32 @@
     PowerShell Ver. : 
 
 .USAGE
-    Put any usage instructions here.
-    Example syntax:
-    PS C:\> .\__remediation_template(STIG-ID-WN10-AU-000500).ps1 
+# Remediation Script: Configure Application Event Log Maximum Size
+# User Context: PS C:\Users\montystig>
+# Description: Sets Application event log max size to 0x8000 (32,768 bytes)
+
+Write-Output "`n[+] Configuring Application Event Log Maximum Size"
+Write-Output "[*] Setting MaxSize to 0x8000 (32768 bytes)..."
+
+# Define the registry path
+$regPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\EventLog\Application"
+
+# Ensure the registry key exists
+if (-not (Test-Path $regPath)) {
+    New-Item -Path $regPath -Force | Out-Null
+    Write-Output "[+] Created missing registry path: $regPath"
+}
+
+# Set the MaxSize DWORD value to 0x8000
+Set-ItemProperty -Path $regPath -Name "MaxSize" -Value 0x8000 -Type DWord
+Write-Output "[✔] MaxSize successfully set to 0x8000 (32768 bytes)"
+
+# Confirm the value was set
+$current = Get-ItemProperty -Path $regPath -Name "MaxSize"
+Write-Output ("[i] Current MaxSize value: {0}" -f $current.MaxSize)
+
+Write-Output "`n[✓] Application Event Log size configuration complete for user: montystig"
+
 #>
 
 
