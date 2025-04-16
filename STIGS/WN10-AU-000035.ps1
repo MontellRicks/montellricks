@@ -20,9 +20,25 @@
     PowerShell Ver. : 
 
 .USAGE
-    Put any usage instructions here.
-    Example syntax:
-    PS C:\> .\__remediation_template(WN10-AU-000035).ps1 
+    # Remediation Script for STIG ID: WN10-AU-000035
+# User Context: PS C:\Users\montystig>
+# Description: Enables audit logging for Logoff events (Success)
+
+Write-Output "`n[+] Remediating STIG: WN10-AU-000035"
+Write-Output "[*] Ensuring audit policy is set to audit Logoff events (Success)..."
+
+# Enable auditing for Logoff events (Success only)
+AuditPol.exe /set /subcategory:"Logoff" /success:enable
+
+# Optional: Also enable Failure auditing (uncomment if required by policy)
+# AuditPol.exe /set /subcategory:"Logoff" /failure:enable
+
+# Confirm the current setting for Logoff auditing
+Write-Output "`n[✔] Current Logoff auditing setting:"
+AuditPol.exe /get /subcategory:"Logoff"
+
+Write-Output "`n[✓] STIG WN10-AU-000035 remediation completed for user: montystig"
+
 #>
 
 
