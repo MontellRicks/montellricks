@@ -55,9 +55,7 @@ Control\Lsa
 
 PS C:\Users\montystig>
 
-PS C:\Users\montystig> 
 
-# YOUR CODE GOES HERE
 # Requires admin rights
 Write-Output "`n[+] Remediating STIG: WN10-SO-000030"
 Write-Output "[*] Enabling subcategory-based audit policy enforcement..."
