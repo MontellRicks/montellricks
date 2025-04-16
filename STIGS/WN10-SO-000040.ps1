@@ -55,7 +55,7 @@ etlogon\Parameters
 
 PS C:\Users\montystig> 
 
-# YOUR CODE GOES HERE
+
 # Requires admin rights
 Write-Output "`n[+] Remediating STIG: WN10-SO-000040"
 Write-Output "[*] Ensuring outgoing secure channel traffic is encrypted..."
