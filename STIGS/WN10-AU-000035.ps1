@@ -48,7 +48,7 @@ catch {
 
 PS C:\Users\montystig> 
 
-# YOUR CODE GOES HERE
+
 # Requires admin rights
 Write-Output "`n[+] Remediating STIG: WN10-AU-000035"
 Write-Output "[*] Configuring audit policy for 'User Account Management' failures..."
