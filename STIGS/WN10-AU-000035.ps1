@@ -1,13 +1,13 @@
 <#
 .SYNOPSIS
-   The system must be configured to audit Account Management - User Account Management failures.
+  The system must be configured to audit Account Management - User Account Management failures.
 
 .NOTES
     Author          : Montell Ricks
     LinkedIn        : linkedin.com/in/montellricks/
     GitHub          : github.com/montellricks
-    Date Created    : 2025-04-15
-    Last Modified   : 2025-04-15
+    Date Created    : 2025-04-16
+    Last Modified   : 2025-04-16
     Version         : 1.0
     CVEs            : N/A
     Plugin IDs      : N/A
@@ -20,38 +20,52 @@
     PowerShell Ver. : 
 
 .USAGE
-    # Remediation Script for STIG ID: WN10-AU-000035
-# User Context: PS C:\Users\montystig>
-# Description: Enables audit logging for Logoff events (Success)
-
+PS C:\Users\montystig> # Requires admin rights
 Write-Output "`n[+] Remediating STIG: WN10-AU-000035"
-Write-Output "[*] Ensuring audit policy is set to audit Logoff events (Success)..."
+Write-Output "[*] Configuring audit policy for 'User Account Management' failures..."
 
-# Enable auditing for Logoff events (Success only)
-AuditPol.exe /set /subcategory:"Logoff" /success:enable
+try {
+    # Set Audit Policy using auditpol.exe
+    $auditSetting = "User Account Management"
+    $desiredAuditLevel = "Failure"
 
-# Optional: Also enable Failure auditing (uncomment if required by policy)
-# AuditPol.exe /set /subcategory:"Logoff" /failure:enable
+    # Apply the setting
+    auditpol /set /subcategory:"$auditSetting" /failure:enable | Out-Null
 
-# Confirm the current setting for Logoff auditing
-Write-Output "`n[✔] Current Logoff auditing setting:"
-AuditPol.exe /get /subcategory:"Logoff"
+    Write-Output "[✔] Audit policy for '$auditSetting' failures has been enabled."
+    Write-Output "[✔] STIG WN10-AU-000035 remediation completed successfully."
+}
+catch {
+    Write-Output "[!] An error occurred while configuring audit policy."
+    Write-Output $_
+}
 
-Write-Output "`n[✓] STIG WN10-AU-000035 remediation completed for user: montystig"
 
-#>
+[+] Remediating STIG: WN10-AU-000035
+[*] Configuring audit policy for 'User Account Management' failures...
+[✔] Audit policy for 'User Account Management' failures has been enabled.
+[✔] STIG WN10-AU-000035 remediation completed successfully.
 
+PS C:\Users\montystig> 
 
-# Must be run as Administrator
+# YOUR CODE GOES HERE
+# Requires admin rights
 Write-Output "`n[+] Remediating STIG: WN10-AU-000035"
-Write-Output "[*] Ensuring audit policy is set to audit Logoff events (Success)..."
+Write-Output "[*] Configuring audit policy for 'User Account Management' failures..."
 
-# Enable auditing for Logoff events (Success only, per most STIGs)
-AuditPol.exe /set /subcategory:"Logoff" /success:enable
+try {
+    # Set Audit Policy using auditpol.exe
+    $auditSetting = "User Account Management"
+    $desiredAuditLevel = "Failure"
 
-# Optional: Also enable Failure auditing if required by your environment
-# AuditPol.exe /set /subcategory:"Logoff" /failure:enable
+    # Apply the setting
+    auditpol /set /subcategory:"$auditSetting" /failure:enable | Out-Null
 
-# Confirm the change
-Write-Output "`n[✔] Current Logoff auditing setting:"
-AuditPol.exe /get /subcategory:"Logoff"
+    Write-Output "[✔] Audit policy for '$auditSetting' failures has been enabled."
+    Write-Output "[✔] STIG WN10-AU-000035 remediation completed successfully."
+}
+catch {
+    Write-Output "[!] An error occurred while configuring audit policy."
+    Write-Output $_
+}
+
