@@ -1,17 +1,17 @@
 <#
 .SYNOPSIS
-    Outgoing secure channel traffic must be encrypted when possible.
+    Audit policy using subcategories must be enabled.
 
 .NOTES
     Author          : Montell Ricks
     LinkedIn        : linkedin.com/in/montellricks/
     GitHub          : github.com/montellricks
-    Date Created    : 2025-04-15
-    Last Modified   : 2025-04-15
+    Date Created    : 2025-04-16
+    Last Modified   : 2025-04-16
     Version         : 1.0
     CVEs            : N/A
     Plugin IDs      : N/A
-    STIG-ID         : WN10-SO-000040
+    STIG-ID         : WN10-CC-000295
 
 .TESTED ON
     Date(s) Tested  : 
@@ -20,54 +20,65 @@
     PowerShell Ver. : 
 
 .USAGE
-# Remediation Script: WN10-SO-000040
-# User Context: PS C:\Users\montystig>
-# Description: Disables the built-in Guest account to enforce compliance
-
+PS C:\Users\montystig> # Requires admin rights
 Write-Output "`n[+] Remediating STIG: WN10-SO-000040"
-Write-Output "[*] Checking the status of the built-in Guest account..."
+Write-Output "[*] Ensuring outgoing secure channel traffic is encrypted..."
 
 try {
-    # Get the built-in Guest account
-    $guestAccount = Get-LocalUser -Name "Guest"
+    $regPath = "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters"
+    $valueName = "SealSecureChannel"
+    $desiredValue = 1
 
-    # Check if it's enabled
-    if ($guestAccount.Enabled) {
-        Write-Output "[-] Guest account is ENABLED. Disabling it now..."
-        Disable-LocalUser -Name "Guest"
-        Write-Output "[✔] Guest account has been DISABLED to meet STIG WN10-SO-000040."
-    } else {
-        Write-Output "[✓] Guest account is already DISABLED. No action needed."
+    # Create the registry path if it doesn't exist
+    if (-not (Test-Path $regPath)) {
+        New-Item -Path $regPath -Force | Out-Null
+        Write-Output "[*] Created registry path: $regPath"
     }
+
+    # Set the registry value
+    Set-ItemProperty -Path $regPath -Name $valueName -Type DWord -Value $desiredValue -Force
+    Write-Output "[✔] Registry value '$valueName' set to $desiredValue at $regPath"
+
+    Write-Output "[✔] STIG WN10-SO-000040 remediation completed successfully."
 }
 catch {
-    Write-Output "[!] Guest account not found or error retrieving account. Skipping..."
+    Write-Output "[!] An error occurred while applying the registry setting."
     Write-Output $_
 }
 
-Write-Output "`n[✔] STIG WN10-SO-000040 remediation completed for user: montystig"
 
-#>
+[+] Remediating STIG: WN10-SO-000040
+[*] Ensuring outgoing secure channel traffic is encrypted...
+[✔] Registry value 'SealSecureChannel' set to 1 at HKLM:\SYSTEM\CurrentControlSet\Services\N
+etlogon\Parameters
+[✔] STIG WN10-SO-000040 remediation completed successfully.
 
+PS C:\Users\montystig> 
 
+# YOUR CODE GOES HERE
 # Requires admin rights
 Write-Output "`n[+] Remediating STIG: WN10-SO-000040"
-Write-Output "[*] Checking the status of the built-in Guest account..."
+Write-Output "[*] Ensuring outgoing secure channel traffic is encrypted..."
 
 try {
-    # Get the built-in Guest account
-    $guestAccount = Get-LocalUser -Name "Guest"
+    $regPath = "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters"
+    $valueName = "SealSecureChannel"
+    $desiredValue = 1
 
-    # Check if it's enabled
-    if ($guestAccount.Enabled) {
-        Write-Output "[-] Guest account is ENABLED. Disabling it now..."
-        Disable-LocalUser -Name "Guest"
-        Write-Output "[✔] Guest account has been DISABLED to meet STIG WN10-SO-000040."
-    } else {
-        Write-Output "[✔] Guest account is already DISABLED. No action needed."
+    # Create the registry path if it doesn't exist
+    if (-not (Test-Path $regPath)) {
+        New-Item -Path $regPath -Force | Out-Null
+        Write-Output "[*] Created registry path: $regPath"
     }
+
+    # Set the registry value
+    Set-ItemProperty -Path $regPath -Name $valueName -Type DWord -Value $desiredValue -Force
+    Write-Output "[✔] Registry value '$valueName' set to $desiredValue at $regPath"
+
+    Write-Output "[✔] STIG WN10-SO-000040 remediation completed successfully."
 }
 catch {
-    Write-Output "[!] Guest account not found or error retrieving account. Skipping..."
+    Write-Output "[!] An error occurred while applying the registry setting."
     Write-Output $_
 }
+
