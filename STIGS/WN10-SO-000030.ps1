@@ -6,8 +6,8 @@
     Author          : Montell Ricks
     LinkedIn        : linkedin.com/in/montellricks/
     GitHub          : github.com/montellricks
-    Date Created    : 2025-04-15
-    Last Modified   : 2025-04-15
+    Date Created    : 2025-04-16
+    Last Modified   : 2025-04-16
     Version         : 1.0
     CVEs            : N/A
     Plugin IDs      : N/A
@@ -20,49 +20,66 @@
     PowerShell Ver. : 
 
 .USAGE
-# Remediation Script: WN10-SO-000030
-# User Context: PS C:\Users\montystig>
-# Description: Ensures that no local user account has 'Password Never Expires' enabled
-
+PS C:\Users\montystig> # Requires admin rights
 Write-Output "`n[+] Remediating STIG: WN10-SO-000030"
-Write-Output "[*] Scanning for local user accounts with 'Password Never Expires' flag set..."
+Write-Output "[*] Enabling subcategory-based audit policy enforcement..."
 
-# Get all enabled local user accounts
-$users = Get-LocalUser | Where-Object { $_.Enabled -eq $true }
+try {
+    $regPath = "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa"
+    $valueName = "SCENoApplyLegacyAuditPolicy"
+    $desiredValue = 1
 
-foreach ($user in $users) {
-    # Check if 'Password Never Expires' is set
-    if ($user.PasswordNeverExpires) {
-        Write-Output "[-] User '$($user.Name)' has 'Password Never Expires' set. Remediating..."
-        # Remove the flag
-        Set-LocalUser -Name $user.Name -PasswordNeverExpires $false
-        Write-Output "[+] '$($user.Name)' updated to enforce password expiration."
+    # Create the registry path if it doesn't exist
+    if (-not (Test-Path $regPath)) {
+        New-Item -Path $regPath -Force | Out-Null
+        Write-Output "[*] Created registry path: $regPath"
     }
-    else {
-        Write-Output "[✓] User '$($user.Name)' is already compliant."
-    }
+
+    # Set the registry value
+    Set-ItemProperty -Path $regPath -Name $valueName -Type DWord -Value $desiredValue -Force
+    Write-Output "[✔] Registry value '$valueName' set to $desiredValue at $regPath"
+
+    Write-Output "[✔] STIG WN10-SO-000030 remediation completed successfully."
+}
+catch {
+    Write-Output "[!] An error occurred while applying the registry setting."
+    Write-Output $_
 }
 
-Write-Output "`n[✔] Remediation complete. All applicable accounts are now compliant with STIG WN10-SO-000030 (Password expiration enforced)."
 
-#>
+[+] Remediating STIG: WN10-SO-000030
+[*] Enabling subcategory-based audit policy enforcement...
+[✔] Registry value 'SCENoApplyLegacyAuditPolicy' set to 1 at HKLM:\SYSTEM\CurrentControlSet\
+Control\Lsa
+[✔] STIG WN10-SO-000030 remediation completed successfully.
 
+PS C:\Users\montystig>
 
+PS C:\Users\montystig> 
+
+# YOUR CODE GOES HERE
 # Requires admin rights
 Write-Output "`n[+] Remediating STIG: WN10-SO-000030"
-Write-Output "[*] Scanning for local user accounts with 'Password Never Expires' flag set..."
+Write-Output "[*] Enabling subcategory-based audit policy enforcement..."
 
-# Get all local user accounts (excluding disabled ones)
-$users = Get-LocalUser | Where-Object { $_.Enabled -eq $true }
+try {
+    $regPath = "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa"
+    $valueName = "SCENoApplyLegacyAuditPolicy"
+    $desiredValue = 1
 
-foreach ($user in $users) {
-    # Check if 'Password Never Expires' is set
-    if ($user.PasswordNeverExpires) {
-        Write-Output "[-] User '$($user.Name)' has 'Password Never Expires' set. Remediating..."
-        # Set password policy to expire (remove the flag)
-        Set-LocalUser -Name $user.Name -PasswordNeverExpires $false
-        Write-Output "[+] '$($user.Name)' updated to enforce password expiration."
+    # Create the registry path if it doesn't exist
+    if (-not (Test-Path $regPath)) {
+        New-Item -Path $regPath -Force | Out-Null
+        Write-Output "[*] Created registry path: $regPath"
     }
-}
 
-Write-Output "`n[✔] Remediation complete. All applicable accounts are now compliant with WN10-SO-000030."
+    # Set the registry value
+    Set-ItemProperty -Path $regPath -Name $valueName -Type DWord -Value $desiredValue -Force
+    Write-Output "[✔] Registry value '$valueName' set to $desiredValue at $regPath"
+
+    Write-Output "[✔] STIG WN10-SO-000030 remediation completed successfully."
+}
+catch {
+    Write-Output "[!] An error occurred while applying the registry setting."
+    Write-Output $_
+}
