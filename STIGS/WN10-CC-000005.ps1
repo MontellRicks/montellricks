@@ -6,8 +6,8 @@
     Author          : Montell Ricks
     LinkedIn        : linkedin.com/in/montellricks/
     GitHub          : github.com/montellricks
-    Date Created    : 2025-04-15
-    Last Modified   : 2025-04-15
+    Date Created    : 2025-04-16
+    Last Modified   : 2025-04-16
     Version         : 1.0
     CVEs            : N/A
     Plugin IDs      : N/A
@@ -20,50 +20,64 @@
     PowerShell Ver. : 
 
 .USAGE
-    
-# Remediation Script: WN10-CC-000005
-# User Context: PS C:\Users\montystig>
-# Description: Disables camera access on the Windows lock screen via registry
-
+PS C:\Users\montystig> # Requires admin rights
 Write-Output "`n[+] Remediating STIG: WN10-CC-000005"
 Write-Output "[*] Disabling camera access from the lock screen..."
 
-# Define the registry path for lock screen camera policy
-$regPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization"
+try {
+    $regPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization"
+    $valueName = "NoLockScreenCamera"
+    $desiredValue = 1
 
-# Create the key if it doesn't exist
-if (-not (Test-Path $regPath)) {
-    New-Item -Path $regPath -Force | Out-Null
-    Write-Output "[+] Created registry path: $regPath"
+    # Create the registry key if it does not exist
+    if (-not (Test-Path $regPath)) {
+        New-Item -Path $regPath -Force | Out-Null
+        Write-Output "[*] Created registry path: $regPath"
+    }
+
+    # Set the value
+    Set-ItemProperty -Path $regPath -Name $valueName -Type DWord -Value $desiredValue -Force
+    Write-Output "[✔] Registry value '$valueName' set to $desiredValue at $regPath"
+
+    Write-Output "[✔] STIG WN10-CC-000005 remediation completed successfully."
+}
+catch {
+    Write-Output "[!] An error occurred while applying the registry setting."
+    Write-Output $_
 }
 
-# Set NoLockScreenCamera to 1 (disable camera on lock screen)
-Set-ItemProperty -Path $regPath -Name "NoLockScreenCamera" -Value 1 -Type DWord
-Write-Output "[✔] Camera access on lock screen has been DISABLED."
 
-# Confirm the setting
-$current = Get-ItemProperty -Path $regPath -Name "NoLockScreenCamera"
-Write-Output ("[i] Current NoLockScreenCamera value: {0}" -f $current.NoLockScreenCamera)
+[+] Remediating STIG: WN10-CC-000005
+[*] Disabling camera access from the lock screen...
+[✔] Registry value 'NoLockScreenCamera' set to 1 at HKLM:\SOFTWARE\Policies\Microsoft\Window
+s\Personalization
+[✔] STIG WN10-CC-000005 remediation completed successfully.
 
-Write-Output "`n[✓] STIG WN10-CC-000005 remediation complete for user: montystig"
+PS C:\Users\montystig> 
 
-
-# Must be run as Administrator
+# YOUR CODE GOES HERE
+# Requires admin rights
 Write-Output "`n[+] Remediating STIG: WN10-CC-000005"
 Write-Output "[*] Disabling camera access from the lock screen..."
 
-# Define the registry path
-$regPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization"
+try {
+    $regPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization"
+    $valueName = "NoLockScreenCamera"
+    $desiredValue = 1
 
-# Create the key if it doesn't exist
-if (-not (Test-Path $regPath)) {
-    New-Item -Path $regPath -Force | Out-Null
+    # Create the registry key if it does not exist
+    if (-not (Test-Path $regPath)) {
+        New-Item -Path $regPath -Force | Out-Null
+        Write-Output "[*] Created registry path: $regPath"
+    }
+
+    # Set the value
+    Set-ItemProperty -Path $regPath -Name $valueName -Type DWord -Value $desiredValue -Force
+    Write-Output "[✔] Registry value '$valueName' set to $desiredValue at $regPath"
+
+    Write-Output "[✔] STIG WN10-CC-000005 remediation completed successfully."
 }
-
-# Set the NoLockScreenCamera value to 1 (disable camera)
-Set-ItemProperty -Path $regPath -Name "NoLockScreenCamera" -Value 1 -Type DWord
-
-# Confirm the setting
-$current = Get-ItemProperty -Path $regPath -Name "NoLockScreenCamera"
-Write-Output ("[✔] NoLockScreenCamera set to: {0}" -f $current.NoLockScreenCamera)
-
+catch {
+    Write-Output "[!] An error occurred while applying the registry setting."
+    Write-Output $_
+}
