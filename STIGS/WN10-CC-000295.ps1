@@ -57,7 +57,6 @@ orer\Feeds
 PS C:\Users\montystig> 
 #>
 
-# YOUR CODE GOES HERE
 # Requires admin rights
 Write-Output "`n[+] Remediating STIG: WN10-CC-000295"
 Write-Output "[*] Preventing attachments from being downloaded from RSS feeds..."
