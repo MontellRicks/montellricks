@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Audit policy using subcategories must be enabled.
+    Outgoing secure channel traffic must be encrypted when possible.
 
 .NOTES
     Author          : Montell Ricks
