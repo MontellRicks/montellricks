@@ -11,7 +11,7 @@ I'm a passionate cybersecurity professional who enjoys diving into complex chall
 - **[Threat Hunting Scenario (Tor Browser Usage)](https://github.com/MontellRicks/Threat-Hunting-Scenario-Tor-Browser-Usage-)**
 
 - ## 🛡️ 📊 ✅ GRC (Governance, Risk, & Complicance) 🛡️ 📊 ✅
-- **[GRC Analyst (NIST CSF 2.0)](https://github.com/MontellRicks/Threat-Hunting-Scenario-Tor-Browser-Usage-)**
+- **[GRC Analyst (NIST CSF 2.0)]([https://github.com/MontellRicks/Threat-Hunting-Scenario-Tor-Browser-Usage-](https://github.com/MontellRicks/GRC-NIST-CSF-2.0/blob/main/README.md))**
 
 <hr/>
 
